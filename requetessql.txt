@@ -1,0 +1,17 @@
+ select a.name, b.course_name,b.credits from students a join enrollments c on a.student_id=c.student_id join courses b on b.course_id=c.course_id;
+select a.name  from students a left join enrollments c on a.student_id = c.student_id where c.student_id IS NULL;
+select a.course_name, count(distinct b.student_id) from courses a join enrollments b on a.course_id=b.course_id group by a.course_name;
+SELECT a.course_name, COUNT(b.student_id) AS num_enrollments, a.capacity FROM courses a JOIN enrollments b ON a.course_id = b.course_id GROUP BY a.course_name, a.capacity HAVING COUNT(b.student_id)
+*2 > a.capacity;
+select a.name, count(b.course_id) num_courses from students a join enrollments b on a.student_id = b.student_id group by a.student_id
+having count (b.course_id) = (select max(course_count) from (select count(course_id) as course_count from enrollments group by student_id) ;
+SELECT a.name, COUNT(b.course_id) AS num_courses FROM students a
+JOIN enrollments b ON a.student_id = b.student_id GROUP BY a.student_id
+HAVING COUNT(b.course_id) = (     SELECT MAX(course_count)     FROM (
+      SELECT COUNT(course_id) AS course_count         FROM enrollments
+       GROUP BY student_id     ) AS subquery ); 
+mysql> select sum(a.credits), b.name from courses a join enrollments c on a.course_id = c.course_id join students b on c.student_id=b.student_id group by b.name order by sum(a.credits) desc;
+select a.course_id from courses a join enrollments b on a.course_id=b.course_id where b.student_id is null;
+je n'ai jamais vu les triggers mais je me mettrai à jour sur cette notion dès ce soir;
+delete from enrollments where course_id=4;
+ delete from students where student_id not in (select distinct student_id from enrollments);
